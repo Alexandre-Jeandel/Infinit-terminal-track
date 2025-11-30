@@ -9,7 +9,7 @@ const scenarioSchema: Schema = {
   properties: {
     description: {
       type: Type.STRING,
-      description: "A detailed, atmospheric, and disturbing description of the current trolley problem situation. It should be second-person ('You see...')."
+      description: "A detailed, atmospheric, and disturbing description of the current trolley problem situation. It MUST be concise and split into exactly two short paragraphs."
     },
     philosophical_context: {
       type: Type.STRING,
@@ -18,7 +18,7 @@ const scenarioSchema: Schema = {
     option_a: {
       type: Type.OBJECT,
       properties: {
-        text: { type: Type.STRING, description: "The label for the first lever pull (e.g. 'Divert to the left')." },
+        text: { type: Type.STRING, description: "Action title. MUST explicitly state who is saved or killed (e.g., 'Save the Baby', 'Kill the Doctors'). Use 'Save' or 'Kill' to maximize impact." },
         consequence: { type: Type.STRING, description: "The immediate, visceral consequence of this choice." }
       },
       required: ["text", "consequence"]
@@ -26,7 +26,7 @@ const scenarioSchema: Schema = {
     option_b: {
       type: Type.OBJECT,
       properties: {
-        text: { type: Type.STRING, description: "The label for the second lever pull (e.g. 'Do nothing')." },
+        text: { type: Type.STRING, description: "Action title. MUST explicitly state who is saved or killed (e.g., 'Do Nothing', 'Sacrifice Yourself'). Use 'Save' or 'Kill' to maximize impact." },
         consequence: { type: Type.STRING, description: "The immediate, visceral consequence of this choice." }
       },
       required: ["text", "consequence"]
@@ -66,8 +66,11 @@ export const generateScenario = async (level: number, previousHistory: GameHisto
     Task:
     Generate a new trolley problem scenario. 
     It MUST be a binary choice (Option A or Option B).
-    The tone should be dark, industrial, philosophical, and increasingly disturbing as the level rises.
-    Do not be polite. Be descriptive and visceral.
+    
+    STRICT TEXT GUIDELINES:
+    1. Description: Short and concise. MUST be split into exactly 2 paragraphs.
+    2. Option Titles: MUST explicitly say who is being Saved or Killed (e.g. "Save the Child", "Kill the 5 Patients", "Sacrifice Yourself"). Use the words 'Save' or 'Kill' to maximize the moral weight.
+    3. Tone: Dark, industrial, philosophical.
   `;
 
   try {
@@ -98,7 +101,7 @@ export const generateScenario = async (level: number, previousHistory: GameHisto
     return {
       id: "fallback",
       level,
-      description: "The fog descends. You cannot see the tracks, but you hear screams. The simulation is glitching due to the weight of your sins.",
+      description: "The fog descends. You cannot see the tracks, but you hear screams.\n\nThe simulation is glitching due to the weight of your sins.",
       philosophical_context: "Epistemological uncertainty.",
       option_a: { text: "Pull the lever blindly", consequence: "Unknown suffering." },
       option_b: { text: "Stand still", consequence: "Unknown suffering." }

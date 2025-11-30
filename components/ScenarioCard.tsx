@@ -25,7 +25,7 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario }) => {
             </span>
           </div>
 
-          <h2 className="text-2xl md:text-3xl text-neutral-100 font-serif leading-relaxed mb-6">
+          <h2 className="text-2xl md:text-3xl text-neutral-100 font-serif leading-relaxed mb-6 whitespace-pre-line">
             {scenario.description}
           </h2>
 
